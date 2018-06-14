@@ -26,10 +26,9 @@ public class Server {
         run(new Configuration());
     }
 
-    public static void run(Configuration configuration)  {
+    public static void run(Configuration configuration) {
 
         Injector injector = Guice.createInjector(configuration);
-
 
         port(injector.getInstance(Key.get(Integer.class, Names.named("port"))));
 
@@ -37,8 +36,8 @@ public class Server {
         postJson("/generate", PdfRequest.class, injector.getInstance(PdfGenerator.class)::process);
 
         get("/generate/:template", (request, response) -> {
-            response.type("application/pdf");
-            return ArrayUtils.toPrimitive(
+
+            byte[] result = ArrayUtils.toPrimitive(
                     injector.getInstance(PdfGenerator.class).process(new PdfRequest(
                                     request.params(":template"),
                                     request.queryMap().toMap().entrySet().stream().collect(
@@ -46,6 +45,14 @@ public class Server {
                             )
                     )
             );
+
+            if (result != null) {
+                response.type("application/pdf");
+                return result;
+            } else {
+                response.status(400);
+                return "Bad request";
+            }
         });
     }
 }

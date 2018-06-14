@@ -38,7 +38,7 @@ public class PdfGenerator {
 
             return ArrayUtils.toObject(Files.readAllBytes(outputFile.toPath()));
 
-        } catch (IOException | DocumentException ex) {
+        } catch (Exception ex) {
             log.error("Process error", ex);
             return null;
         }
