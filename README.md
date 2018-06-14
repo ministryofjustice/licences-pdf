@@ -1,4 +1,4 @@
-# Licences PDf generator
+# Licences PDF Generator
 
 Copied from https://github.com/noms-digital-studio/pdf-generator
 
