@@ -1,0 +1,8 @@
+branch-defaults:
+  master:
+    environment: licences-pdf-generator-stage
+deploy:
+  artifact: Dockerrun.aws.json
+global:
+  application_name: licences-pdf-generator
+  default_region: eu-west-2

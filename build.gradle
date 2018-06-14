@@ -1,0 +1,43 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+mainClassName = "uk.gov.justice.digital.licences.pdf.Server"
+
+version = 'v0.1.' + (System.getenv("CIRCLE_BUILD_NUM") ?: "SNAPSHOT")
+
+repositories {
+    jcenter()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'uk.gov.justice.digital.licences.pdf.Server',
+                   'Implementation-Version': version
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it).matching {
+            exclude { it.path.contains('META-INF') } }
+        }
+    }
+}
+
+dependencies {
+
+    compile "ch.qos.logback:logback-classic:1.2.3"
+    compile 'com.google.inject:guice:4.1.0'
+    compile 'com.sparkjava:spark-core:2.6.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.8.1'
+    compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'org.xhtmlrenderer:flying-saucer-pdf:9.1.5'
+    compile 'com.mashape.unirest:unirest-java:1.4.9'
+
+    compileOnly 'org.projectlombok:lombok:1.16.16'
+
+    testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
+    testCompile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7.1'
+}
+
+test.outputs.upToDateWhen {false}
