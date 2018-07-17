@@ -25,7 +25,7 @@ public class PdfGenerator {
 
     public Byte[] process(PdfRequest pdfRequest) {
 
-        log.info("PDF Generator request: " + pdfRequest);
+        // log.info("PDF Generator request: " + pdfRequest);
 
         try {
             File inputFile = createTempFileName("input", ".html");

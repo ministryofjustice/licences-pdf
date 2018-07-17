@@ -3,7 +3,7 @@
 <head>
 
     <meta charset="utf-8"/>
-    <title>LICENCE AND NOTICE OF SUPERVISION</title>
+    <title>LICENCE</title>
 
     <style type="text/css">
 
@@ -215,16 +215,20 @@
 
 <ol class="start">
     <li>Under the provisions of Chapter 6 of the Criminal Justice Act 2003 you are being released on licence. You
-     will be subject to a Home Detention Curfew. The objective of the Home Detention Curfew is to help you manage your
-     return into the community. Under the provisions of Section 256B of the 2003 Act you will also be under the
-     supervision of a nominated officer. The objectives of this supervision are to (a) protect the public, (b)
-     prevent re-offending and (c) help you to resettle successfully into the community.
+        will be subject to a Home Detention Curfew. The objective of the Home Detention Curfew is to help you
+        manage your return into the community. You will also be under the supervision of a nominated officer. The
+        objectives of this supervision are to (a) protect the public, (b) prevent re-offending and (c) help you to
+        resettle successfully into the community.
     </li>
-    <li>Your Home Detention Curfew commences on <span class="entry">SENT_HDCAD</span> and expires on <span class="entry">SENT_CRD</span>
+    <li>Your Home Detention Curfew commences on <span class="entry">SENT_HDCAD</span> and expires on <span
+            class="entry">SENT_CRD</span>
     </li>
-    <li>Your supervision commences on <span class="entry">SENT_CRD</span> and expires on <span class="entry">SENT_LED</span>
+    <li>Your supervision commences on <span class="entry">SENT_HDCAD</span> and expires on
+        <span class="entry">SENT_LED</span> unless this licence is previously revoked.
     </li>
-    <li>On release you must report without delay to:
+    <li>On release from prison (including, if applicable, any release from detention under the Immigration Act 1971
+        during the currency of your licence, whether or not leave has been granted for you to remain in the United
+        Kingdom), unless otherwise directed by your supervising officer, you must report without delay to:
     </li>
 
     <br/>
@@ -235,19 +239,6 @@
 
     <p>At <span class="entry">REPORTING_AT</span> on <span class="entry">REPORTING_ON</span></p>
 </ol>
-
-<p class="subheading">Home Detention Curfew</p>
-
-<ol class="continue">
-    <li>The address(es) to which you are subject to curfew is / are:
-        <br/>
-        <br/>
-        <span class="pre entry">CURFEW_ADDRESS</span>
-        <br/>
-        <p>Details of curfew times are shown below at paragraph 7.</p>
-    </li>
-</ol>
-
 
 <div class="footer"></div>
 <div class="pagebreak"></div>
@@ -260,13 +251,23 @@
     </tr>
 </table>
 <br/>
+
+<p class="subheading">Home Detention Curfew</p>
+
 <ol class="continue">
+    <li>The address(es) to which you are curfewed are:
+        <br/>
+        <br/>
+        <span class="pre entry">CURFEW_ADDRESS</span>
+        <br/>
+        <p>Details of curfew times are shown below at paragraph 7.</p>
+    </li>
     <li>On the day of your release, you will be subject to curfew at your curfew address from
-        <span class="entry">CURFEW_FIRST_FROM</span> until midnight. The contractor will visit you at this address
-        during this time in order to fit you with the tag. You must show the contractor this copy of the licence to confirm
-        your identity. Your curfew will then run until the curfew finish time the following morning.  On your last day
-        of curfew the contractor will visit you to remove the tag and monitoring equipment. This will take place in the
-        last two hours of your last curfew period; i.e. between 10pm and midnight.
+        <span class="entry">CURFEW_FIRST_FROM</span> until midnight. The contractor will visit you at this address before
+        midnight during this period in order to fit you with the tag. You must show the contractor this copy of the
+        licence to confirm your identity. Your curfew will then run until the curfew finish time the following morning.  
+        On your last day of curfew the contractor will visit you to remove the tag and monitoring equipment. This will
+        take place in the last two hours of your last curfew period; i.e. between 10pm and midnight.
     </li>
     <li>After your day of release, you are required to remain at your place of curfew during the following hours:</li>
     <br/>
@@ -329,9 +330,7 @@
         midnight and 6.00am. However, the contractor may visit the curfew address between midnight and 6:00am in
         order to investigate a reported violation.
     </li>
-</ol>
 
-<ol class="continue">
     <li>The monitoring equipment will usually operate via the mobile cellular network and will only need a dedicated
         telephone line to be fitted if the mobile signal is poor at the curfew address. You will be responsible for
         meeting the cost of the small amount of electricity used by the monitoring equipment at your curfew address.
@@ -360,6 +359,7 @@
 <br/>
 
 <ol class="continue">
+
     <li>While on Home Detention Curfew you may be liable to recall to prison if you breach the condition of this
         licence relating to the curfew.  You will be in breach of this condition if:
 
@@ -372,10 +372,6 @@
 
             <li>You withdraw your consent to the monitoring arrangements.</li>
         </ol>
-    </li>
-
-    <li><strong>It is a condition of your release on licence that you are well behaved, do not commit any offence and
-    do not do anything which could undermine the objectives of your early release from prison</strong>
     </li>
 
     <li>In addition, you may be recalled to prison if your whereabouts can no longer be electronically monitored at
@@ -411,7 +407,8 @@
 
 <ol class="continue">
 
-    <li>You must place yourself under the supervision of whichever supervising officer is nominated for this purpose from time to time.
+    <li>You must place yourself under the supervision of whichever supervising officer or social worker is nominated
+        for this purpose from time to time.
     </li>
 
     <li>While under supervision you must:
@@ -419,7 +416,8 @@
 
         <ol class="roman start">
             <li>
-                Be of good behaviour and not behave in a way which undermines the purpose of the licence period;
+                Be of good behaviour and not behave in a way which undermines the purpose of the licence
+                period;
             </li>
 
             <li>Not commit any offence;</li>
@@ -456,48 +454,49 @@ CONDITIONS
     <li>The Secretary of State may vary or cancel any of the above conditions, in accordance with Section 250(4) of
         the Criminal Justice Act 2003.
     </li>
+</ol>
 
+
+    <div class="footer"></div>
+    <div class="pagebreak"></div>
+
+    <table class="wide noLeftPad">
+        <tr>
+            <td>Name: <span class="entry">OFF_NAME</span></td>
+            <td>Prison no: <span class="entry">OFF_NOMS</span></td>
+            <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
+        </tr>
+    </table>
+    <br/>
+
+<ol class="continue">
     <li>If you fail to submit yourself to a recall to custody following either a notification of the revocation of
         your licence, or remain out of contact with Probation Services for a period of six months, you may be liable to
         face a further charge of being unlawfully at large following recall under section 255ZA of the Criminal Justice
         Act 2003. This could result in a fine, a sentence of up to two years’ imprisonment, or both.
     </li>
-</ol>
 
-
-<div class="footer"></div>
-<div class="pagebreak"></div>
-
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
-
-    <li>If you fail to comply with any requirement of your supervision (set out in paragraphs 4, 16 and 17 above) under
-    section 256C of the Criminal Justice Act 2003 you will be liable to be summoned to appear before a court. The court
-    may order you to be detained for up to 30 days or impose a fine up to level 3 on the standard scale.
+    <li>If you fail to comply with any requirement of your licence period (set out above) or
+        if you otherwise pose a risk to the public, you will be liable to have this licence revoked and be recalled to
+        custody until the date on which your licence would have otherwise ended. If you are sent back to prison and are
+        re-released before the end of your licence, you will still be subject to licence conditions until the end of
+        your sentence.
     </li>
 
+    <li>Your licence expires on <span class="entry">SENT_LED</span></li>
+
     <li>Your sentence expires on <span class="entry">SENT_SED</span></li>
+
+
+    <p class="subheading">Contact Points</p>
+
+    <p>Monitoring Supplier: <span class="entry">MONITOR</span></p>
+
+    <p>Releasing establishment: <span class="entry">EST_PHONE</span></p>
+
 </ol>
 
-
-<p class="subheading">Contact Points</p>
-
-<p>Monitoring Supplier: <span class="entry">MONITOR</span></p>
-
-<p>Releasing establishment: <span class="entry">EST_PHONE</span></p>
-
-
 <div class="footer"></div>
-
 
 </body>
 </html>
