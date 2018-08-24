@@ -21,10 +21,13 @@
         div.footer {
             position: running(footer);
             text-align: center;
+            font-weight: bold;
         }
 
         div.footer::after {
             content: 'Page ' counter(page) ' of ' counter(pages) '  -  HDC YN v1.0';
+            font-size: 10px;
+            font-weight: normal;
         }
 
         .pagebreak {
