@@ -69,10 +69,10 @@ jobs:
                docker push mojdigitalstudio/pdf-generator:latest
 
     deploy_release_to_eb:
-          working_directory: ~/noms-digital-studio/licencespdf
-          docker:
+        working_directory: ~/noms-digital-studio/licencespdf
+        docker:
           - image: mojdigitalstudio/circleci-node-awsebcli
-          steps:
+        steps:
           - checkout
           - attach_workspace:
               at: ~/noms-digital-studio/licencespdf
@@ -96,7 +96,7 @@ jobs:
           - persist_to_workspace:
               root: .
               paths:
-              - Dockerrun.aws.json
+                - Dockerrun.aws.json
 
 workflows:
 
