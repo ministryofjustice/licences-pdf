@@ -97,10 +97,6 @@ jobs:
               root: .
               paths:
               - Dockerrun.aws.json
-          - persist_to_workspace:
-              root: .
-              paths:
-                - Dockerrun.aws.json
 
 workflows:
 
