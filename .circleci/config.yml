@@ -69,16 +69,13 @@ jobs:
                docker push mojdigitalstudio/pdf-generator:latest
 
     deploy_release_to_eb:
-        <<: *defaults
-        steps:
+          working_directory: ~/noms-digital-studio/licencespdf
+          docker:
+          - image: mojdigitalstudio/circleci-node-awsebcli
+          steps:
           - checkout
           - attach_workspace:
               at: ~/noms-digital-studio/licencespdf
-          - deploy:
-              name: Install elastic beanstalk CLI
-              command: |
-                sudo apt-get install python-pip python-dev
-                pip install --user 'six>-1.9.0' awsebcli --ignore-installed
           - deploy:
               name: Deploy to Elastic Beanstalk Dev
               command: |
@@ -96,6 +93,10 @@ jobs:
                  }
                 EOF
                 ~/.local/bin/eb deploy --process --verbose --label ${VERSION}
+          - persist_to_workspace:
+              root: .
+              paths:
+              - Dockerrun.aws.json
           - persist_to_workspace:
               root: .
               paths:
