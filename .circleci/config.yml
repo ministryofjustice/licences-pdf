@@ -97,6 +97,8 @@ jobs:
               root: .
               paths:
                 - Dockerrun.aws.json
+          - store_artifacts:
+              path: Dockerrun.aws.json
 
 workflows:
 
