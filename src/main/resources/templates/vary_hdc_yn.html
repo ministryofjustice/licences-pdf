@@ -12,10 +12,20 @@
                 content: element(footer);
             }
 
+            @top-center {
+                content: element(header);
+            }
+
             margin-top: 10%;
             margin-left: 5%;
             margin-right: 5%;
             margin-bottom: 10%;
+        }
+
+        div.header {
+            position: running(header);
+            text-align: center;
+            font-weight: bold;
         }
 
         div.footer {
@@ -251,23 +261,7 @@
         <br/>
         <p>Details of curfew times are shown below at paragraph 7.</p>
     </li>
-</ol>
 
-
-<div class="footer">
-    Version: VERSION_NUMBER, VERSION_DATE<br/>
-</div>
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-<ol class="continue">
     <li>On the day of your release, you will be subject to curfew at your curfew address.
         The contractor will visit you at this address
         during this time in order to fit you with the tag. You must show the contractor this copy of the licence to confirm
@@ -336,9 +330,7 @@
         midnight and 6.00am. However, the contractor may visit the curfew address between midnight and 6:00am in
         order to investigate a reported violation.
     </li>
-</ol>
 
-<ol class="continue">
     <li>The monitoring equipment will usually operate via the mobile cellular network and will only need a dedicated
         telephone line to be fitted if the mobile signal is poor at the curfew address. You will be responsible for
         meeting the cost of the small amount of electricity used by the monitoring equipment at your curfew address.
@@ -352,21 +344,7 @@
         The installation will normally take place during standard working hours and is fully paid for by the
         supplier.
     </li>
-</ol>
 
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
     <li>While on Home Detention Curfew you may be liable to recall to prison if you breach the condition of this
         licence relating to the curfew.  You will be in breach of this condition if:
 
@@ -402,16 +380,7 @@
     </li>
 </ol>
 
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
+<br/>
 <br/>
 
 <p class="subheading">Probation Supervision</p>
@@ -469,23 +438,6 @@ CONDITIONS
         face a further charge of being unlawfully at large following recall under section 255ZA of the Criminal Justice
         Act 2003. This could result in a fine, a sentence of up to two years’ imprisonment, or both.
     </li>
-</ol>
-
-
-
-<div class="pagebreak"></div>
-
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
 
     <li>If you fail to comply with any requirement of your supervision (set out in paragraphs 4, 16 and 17 above) under
     section 256C of the Criminal Justice Act 2003 you will be liable to be summoned to appear before a court. The court
@@ -495,7 +447,7 @@ CONDITIONS
     <li>Your sentence expires on <span class="entry">SENT_SED</span></li>
 </ol>
 
-
+<br/>
 <p class="subheading">Contact Points</p>
 
 <p>Monitoring Supplier: <span class="entry">MONITOR</span></p>

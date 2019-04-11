@@ -12,10 +12,20 @@
                 content: element(footer);
             }
 
+            @top-center {
+                content: element(header);
+            }
+
             margin-top: 10%;
             margin-left: 5%;
             margin-right: 5%;
             margin-bottom: 10%;
+        }
+
+        div.header {
+            position: running(header);
+            text-align: center;
+            font-weight: bold;
         }
 
         div.footer {
@@ -184,8 +194,21 @@
     </style>
 </head>
 
-
 <body>
+
+<div class="header">
+    <table class="wide">
+        <tr>
+            <td class="center">Name: <span class="entry">OFF_NAME</span></td>
+            <td class="center">Prison no: <span class="entry">OFF_NOMS</span></td>
+            <td class="center">Date of Birth: <span class="entry">OFF_DOB</span></td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer">
+    Version: VERSION_NUMBER, VERSION_DATE<br/>
+</div>
 
 <table class="wide">
     <tr>
@@ -307,23 +330,7 @@
         midnight and 6.00am. However, the contractor may visit the curfew address between midnight and 6:00am in
         order to investigate a reported violation.
     </li>
-</ol>
 
-<div class="footer">
-    Version: VERSION_NUMBER, VERSION_DATE<br/>
-</div>
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
     <li>The monitoring equipment will usually operate via the mobile cellular network and will only need a dedicated
         telephone line to be fitted if the mobile signal is poor at the curfew address. You will be responsible for
         meeting the cost of the small amount of electricity used by the monitoring equipment at your curfew address.
@@ -373,23 +380,6 @@
         a new job), you must contact the Prison Service establishment from which you were released.  A contact number is
         attached at the bottom of this licence.
     </li>
-</ol>
-
-
-<div class="pagebreak"></div>
-
-
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
 
     <li>Your sentence expires on <span class="entry">SENT_SED</span></li>
 

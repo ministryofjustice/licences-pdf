@@ -12,10 +12,20 @@
                 content: element(footer);
             }
 
+            @top-center {
+                content: element(header);
+            }
+
             margin-top: 10%;
             margin-left: 5%;
             margin-right: 5%;
             margin-bottom: 10%;
+        }
+
+        div.header {
+            position: running(header);
+            text-align: center;
+            font-weight: bold;
         }
 
         div.footer {
@@ -184,8 +194,21 @@
     </style>
 </head>
 
-
 <body>
+
+<div class="header">
+    <table class="wide">
+        <tr>
+            <td class="center">Name: <span class="entry">OFF_NAME</span></td>
+            <td class="center">Prison no: <span class="entry">OFF_NOMS</span></td>
+            <td class="center">Date of Birth: <span class="entry">OFF_DOB</span></td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer">
+    Version: VERSION_NUMBER, VERSION_DATE<br/>
+</div>
 
 <table class="wide">
     <tr>
@@ -258,18 +281,7 @@
     <p>At <span class="entry">REPORTING_AT</span> on <span class="entry">REPORTING_ON</span></p>
 </ol>
 
-<div class="footer">
-    Version: VERSION_NUMBER, VERSION_DATE<br/>
-</div>
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
+<br/>
 <br/>
 
 <p class="subheading">Home Detention Curfew</p>
@@ -355,21 +367,7 @@
         midnight and 6.00am. However, the contractor may visit the curfew address between midnight and 6:00am in
         order to investigate a reported violation.
     </li>
-</ol>
 
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
     <li>The monitoring equipment will usually operate via the mobile cellular network and will only need a dedicated
         telephone line to be fitted if the mobile signal is poor at the curfew address. You will be responsible for
         meeting the cost of the small amount of electricity used by the monitoring equipment at your curfew address.
@@ -418,17 +416,9 @@
     </li>
 </ol>
 
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
 <br/>
+<br/>
+
 
 <p class="subheading">Licence Period</p>
 
@@ -500,16 +490,7 @@ CONDITIONS
     </li>
 </ol>
 
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
+<br/>
 <br/>
 
 <p class="subheading">Post-Sentence Supervision Period</p>
@@ -554,26 +535,11 @@ CONDITIONS
             <!-- If you auto-format the file it will break the layout -->
             <!-- PSS should be at start of line -->
 <div class="pre conditions">
-PSS
+PSSCONDITIONS
 </div>
         </ol>
     </li>
 
-</ol>
-
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
     <li>The
         Secretary of State may vary or cancel any of the above conditions, in accordance with Section 256AB(4), 256D and
         256E of the Criminal Justice Act 2003.
@@ -585,6 +551,8 @@ PSS
         unpaid work or electronic location monitoring.
     </li>
 
+    <br/>
+
     <p class="subheading">Expiration Dates</p>
 
     <li>Your Home Detention Curfew expires on <span class="entry">SENT_CRD</span></li>
@@ -595,6 +563,8 @@ PSS
 
     <li>Your post-sentence supervision period expires on <span class="entry">SENT_TUSED</span></li>
 
+    <br/>
+
     <p class="subheading">Contact Points</p>
 
     <p>Monitoring Supplier: <span class="entry">MONITOR</span></p>
@@ -603,16 +573,7 @@ PSS
 
 </ol>
 
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
+<br/>
 <br/>
 
 <p class="subheading underline">Explanatory note in respect of your licence</p>
