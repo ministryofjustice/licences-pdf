@@ -12,10 +12,20 @@
                 content: element(footer);
             }
 
+            @top-center {
+                content: element(header);
+            }
+
             margin-top: 10%;
             margin-left: 5%;
             margin-right: 5%;
             margin-bottom: 10%;
+        }
+
+        div.header {
+            position: running(header);
+            text-align: center;
+            font-weight: bold;
         }
 
         div.footer {
@@ -184,8 +194,21 @@
     </style>
 </head>
 
-
 <body>
+
+<div class="header">
+    <table class="wide">
+        <tr>
+            <td class="center">Name: <span class="entry">OFF_NAME</span></td>
+            <td class="center">Prison no: <span class="entry">OFF_NOMS</span></td>
+            <td class="center">Date of Birth: <span class="entry">OFF_DOB</span></td>
+        </tr>
+    </table>
+</div>
+
+<div class="footer">
+    Version: VERSION_NUMBER, VERSION_DATE<br/>
+</div>
 
 <table class="wide">
     <tr>
@@ -251,18 +274,7 @@
     <p>At <span class="entry">REPORTING_AT</span> on <span class="entry">REPORTING_ON</span></p>
 </ol>
 
-<div class="footer">
-    Version: VERSION_NUMBER, VERSION_DATE<br/>
-</div>
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
+<br/>
 <br/>
 
 <p class="subheading">Home Detention Curfew</p>
@@ -355,21 +367,6 @@
         It is your responsibility to ensure that there is an electricity supply available during your time on
         curfew.
     </li>
-</ol>
-
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
 
     <li>In the event of a dedicated telephone line needing to be installed you must agree to the installation at
         your curfew address for use by the supplier. The supplier will notify you of a time and a date and you must be
@@ -409,17 +406,7 @@
     </li>
 </ol>
 
-
-<div class="pagebreak"></div>
-
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
+<br/>
 <br/>
 
 <p class="subheading">Post-Sentence Supervision Period</p>
@@ -469,21 +456,6 @@ CONDITIONS
         </ol>
     </li>
 
-</ol>
-
-
-<div class="pagebreak"></div>
-
-<table class="wide noLeftPad">
-    <tr>
-        <td>Name: <span class="entry">OFF_NAME</span></td>
-        <td>Prison no: <span class="entry">OFF_NOMS</span></td>
-        <td>Date of Birth: <span class="entry">OFF_DOB</span></td>
-    </tr>
-</table>
-<br/>
-
-<ol class="continue">
     <li>The
         Secretary of State may vary or cancel any of the above conditions, in accordance with Section 256AB(4), 256D and
         256E of the Criminal Justice Act 2003.
@@ -495,6 +467,8 @@ CONDITIONS
         unpaid work or electronic location monitoring.
     </li>
 
+    <br/>
+
     <p class="subheading">Expiration Dates</p>
 
     <li>Your Home Detention Curfew expires on <span class="entry">SENT_CRD</span></li>
@@ -502,6 +476,8 @@ CONDITIONS
     <li>Your sentence expires on <span class="entry">SENT_SED</span></li>
 
     <li>Your post-sentence supervision period expires on <span class="entry">SENT_TUSED</span></li>
+
+    <br/>
 
     <p class="subheading">Contact Points</p>
 
