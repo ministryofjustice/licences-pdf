@@ -15,7 +15,7 @@ public class Configuration extends AbstractModule implements EnvironmentBinder {
     public Map<String, String> envDefaults() {
 
         return ImmutableMap.of(
-                "PORT", "8081"
+                "PORT", "8080"
         );
     }
 
