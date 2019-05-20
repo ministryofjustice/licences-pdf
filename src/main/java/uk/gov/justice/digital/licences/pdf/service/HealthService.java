@@ -23,7 +23,6 @@ public class HealthService {
         return ImmutableMap.of(
                 "status", "OK",
                 "version", getVersion(),
-                "dateTime", Instant.now().toString(),
                 "configuration", allSettings
         );
     }
