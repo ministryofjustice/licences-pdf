@@ -13,10 +13,10 @@ RUN addgroup --gid 2000 --system appgroup && \
 
 WORKDIR /app
 
-COPY ./build/libs/licencespdf-*.jar /app/licencespdf.jar
+COPY ./build/libs/licencespdf-*.jar /app/app.jar
 
 RUN chown -R appuser:appgroup /app
 
 USER 2000
 
-ENTRYPOINT ["/usr/bin/java", "-jar", "/app/licencespdf.jar"]
+ENTRYPOINT ["/usr/bin/java", "-jar", "/app/app.jar"]

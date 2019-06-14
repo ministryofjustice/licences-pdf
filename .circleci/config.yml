@@ -1,118 +1,129 @@
 defaults: &defaults
-  working_directory: ~/noms-digital-studio/licencespdf
-  docker:
-    - image: circleci/openjdk:11-jdk
+  working_directory: ~/app
 
 version: 2
 jobs:
-    build:
+  build:
+    <<: *defaults
+    docker:
+      - image: circleci/openjdk:11-jdk-browsers
+    steps:
+      - checkout
+      - restore_cache:
+          key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+      - restore_cache:
+          key: gradle-cache-{{ checksum "build.gradle" }}
+      - run: ./gradlew build
+      - run:
+          name: Record the Application Version
+          command: |
+            jar xvf build/libs/licencespdf-*.jar BOOT-INF/classes/META-INF/build-info.properties
+            APP_VERSION=$(grep 'build.version=' BOOT-INF/classes/META-INF/build-info.properties | awk -F= '{print $2}')
+            rm BOOT-INF/classes/META-INF/build-info.properties
+
+            # make up a good version name
+            TAG=${APP_VERSION}.${CIRCLE_BRANCH}
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+              TAG=${APP_VERSION}
+            fi
+            echo $TAG > ./app_version.txt
+      - save_cache:
+          key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+          paths:
+            - /home/circleci/.gradle/wrapper
+      - save_cache:
+          key: gradle-cache-{{ checksum "build.gradle" }}
+          paths:
+            - /home/circleci/.gradle/caches
+      - store_test_results:
+          path: build/test-results
+      - store_artifacts:
+          path: build/reports/tests
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build/libs
+            - build.gradle
+            - Dockerfile
+            - app_version.txt
+
+  build_docker:
+    <<: *defaults
+    docker:
+      - image: circleci/node:10.15.0-browsers
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: Build container and publish to docker hub
+          command: |
+            APP_VERSION=$(cat ./app_version.txt)
+
+            # Build the image
+            docker build --rm=false . \
+               --tag "mojdigitalstudio/pdf-generator:$BUILD_VERSION" \
+               --label "maintainer=licences-team@digital.justice.gov.uk" \
+               --label "app.version=$APP_VERSION" \
+               --label "build.version=$APP_VERSION" \
+               --label "build.number=$CIRCLE_BUILD_NUM" \
+               --label "build.url=$CIRCLE_BUILD_URL" \
+               --label "build.gitref=$CIRCLE_SHA1"
+
+            # Publish to docker hub for master branch builds
+            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
+              docker login -u $DOCKER_USER -p $DOCKER_PASS
+              docker push mojdigitalstudio/pdf-generator:$APP_VERSION
+              docker tag mojdigitalstudio/pdf-generator:$APP_VERSION mojdigitalstudio/pdf-generator:latest
+              docker push mojdigitalstudio/pdf-generator:latest
+            fi
+
+    deploy_release_to_eb:
       <<: *defaults
-      steps:
-          - checkout
-          - restore_cache:
-              keys:
-                - dotgradle-{{ checksum "build.gradle" }}
-                - dotgradle-
-          - run:
-              name: Run gradle build
-              command: ./gradlew build
-          - save_cache:
-              paths:
-                - ~/.gradle
-              key: dotgradle-{{ checksum "build.gradle" }}
-          - store_test_results:
-              path: ./build/test-results/test/
-          - run:
-              name: Generate Build version
-              command: |
-                echo "export BUILD_VERSION=$(date +%Y%m%d%H%M)-$CIRCLE_BUILD_NUM" >> $BASH_ENV
-          - run:
-              name: Save Fat Jar
-              command: |
-                mkdir -p ./build/artifacts
-                mv build/libs/*.jar ./build/artifacts/
-                ls -1 ./build/artifacts/licencespdf-*.jar | sed 's/^.*licencespdf-\(.*\)\.jar.*$/\1/' > ./build/artifacts/version.txt
-                cp ./build/artifacts/licencespdf*.jar ./build/artifacts/licencespdf.jar
-          - persist_to_workspace:
-              root: .
-              paths:
-                - build/artifacts/licencespdf.jar
-                - build/artifacts/version.txt
-          - store_artifacts:
-              path: build/artifacts
-              destination: jars
-    build_docker:
-      <<: *defaults
+      docker:
+        - image: mojdigitalstudio/circleci-node-awsebcli
       steps:
         - checkout
         - attach_workspace:
-            at: ~/noms-digital-studio/licencespdf
-        - setup_remote_docker:
-            exclusive: true
-        - run:
-            name: Build container and publish to docker hub (master only)
+            at: ~/app
+        - deploy:
+            name: Deploy to Elastic Beanstalk Dev
             command: |
-               VERSION=$(cat ./build/artifacts/version.txt)
-               GIT_REF=${CIRCLE_SHA1}
-               BUILD_VERSION=${VERSION}
-
-               docker build --rm=false . \
-                   --tag "mojdigitalstudio/pdf-generator:$BUILD_VERSION" \
-                   --label "maintainer=licences-team@digital.justice.gov.uk" \
-                   --label "build.number=$CIRCLE_BUILD_NUM" \
-                   --label "build.url=$CIRCLE_BUILD_URL" \
-                   --label "build.gitref=$GIT_REF"
-
-               docker login -u $DOCKER_USER -p $DOCKER_PASS
-               docker tag mojdigitalstudio/pdf-generator:$BUILD_VERSION mojdigitalstudio/pdf-generator:latest
-               docker push mojdigitalstudio/pdf-generator:$BUILD_VERSION
-               docker push mojdigitalstudio/pdf-generator:latest
-
-    deploy_release_to_eb:
-        working_directory: ~/noms-digital-studio/licencespdf
-        docker:
-          - image: mojdigitalstudio/circleci-node-awsebcli
-        steps:
-          - checkout
-          - attach_workspace:
-              at: ~/noms-digital-studio/licencespdf
-          - deploy:
-              name: Deploy to Elastic Beanstalk Dev
-              command: |
-                VERSION=$(cat ./build/artifacts/version.txt)
-                cat <<EOF > ./Dockerrun.aws.json
-                {
-                   "AWSEBDockerrunVersion": "1",
-                   "Image": {
-                     "Name": "mojdigitalstudio/pdf-generator:$VERSION",
-                     "Update": "true"
-                   },
-                   "Ports": [
-                     {"ContainerPort": "8080"}
-                   ]
-                 }
-                EOF
-                ~/.local/bin/eb deploy --process --verbose --label ${VERSION}
-          - persist_to_workspace:
-              root: .
-              paths:
-                - Dockerrun.aws.json
-          - store_artifacts:
-              path: Dockerrun.aws.json
+              VERSION=$(cat ./app_version.txt)
+              cat <<EOF > ./Dockerrun.aws.json
+              {
+                 "AWSEBDockerrunVersion": "1",
+                 "Image": {
+                   "Name": "mojdigitalstudio/pdf-generator:$VERSION",
+                   "Update": "true"
+                 },
+                 "Ports": [
+                   {"ContainerPort": "8080"}
+                 ]
+               }
+              EOF
+              ~/.local/bin/eb deploy --process --verbose --label ${VERSION}
+        - persist_to_workspace:
+            root: .
+            paths:
+              - Dockerrun.aws.json
+        - store_artifacts:
+            path: Dockerrun.aws.json
 
 workflows:
-
-    version: 2
-    build-deploy:
-        jobs:
+  version: 2
+  build-deploy:
+    jobs:
+      - build
+      - build_docker:
+          requires:
             - build
-            - build_docker:
-                requires:
-                  - build
-                filters:
-                  branches:
-                    only:
-                      - master
-            - deploy_release_to_eb:
-                requires:
-                  - build_docker
+          filters:
+            branches:
+              only:
+                - master
+      - deploy_release_to_eb:
+          requires:
+            - build_docker
