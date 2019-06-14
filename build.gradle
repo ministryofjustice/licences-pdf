@@ -10,16 +10,15 @@ plugins {
     id 'com.github.ben-manes.versions' version '0.21.0'
 }
 
-apply plugin: 'groovy'
-
 repositories {
     mavenCentral()
 }
 
-def today = Instant.now()
-group = 'uk.gov.justice.digital.hmpps'
 project.sourceCompatibility = 11
 project.targetCompatibility = 11
+
+def today = Instant.now()
+group = 'uk.gov.justice.digital.hmpps'
 
 def todayDate = LocalDate.now()
 def formatter = DateTimeFormatter.ofPattern('yyyy-MM-dd')
@@ -58,7 +57,7 @@ dependencies {
 
     implementation 'net.logstash.logback:logstash-logback-encoder:6.0'
     implementation 'com.microsoft.azure:applicationinsights-spring-boot-starter:1.2.0-BETA'
-    implementation 'com.microsoft.azure:applicationinsights-logging-logback:2.3.1'
+    implementation 'com.microsoft.azure:applicationinsights-logging-logback:2.4.0-BETA'
     implementation 'org.apache.commons:commons-text:1.6'
     implementation 'commons-io:commons-io:2.6'
     implementation 'com.github.timpeeters:spring-boot-graceful-shutdown:2.1.1'
