@@ -4,7 +4,7 @@ MAINTAINER HMPPS Digital Studio <info@digital.justice.gov.uk>
 RUN apt-get update && apt-get install -y curl
 WORKDIR /app
 
-COPY ./build/libs/licencespdf*.jar /app/licencespdf.jar
+COPY ./build/libs/licencespdf-*.jar /app/licencespdf.jar
 
 EXPOSE 8080
 

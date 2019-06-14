@@ -1,5 +1,6 @@
 package uk.gov.justice.digital.licences.pdf.utils;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,14 @@ import java.util.Optional;
 
 import static uk.gov.justice.digital.licences.pdf.utils.MdcUtility.CORRELATION_ID_HEADER;
 
+
 @Slf4j
 @Component
 @Order(1)
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class CorrelationMdcFilter implements Filter {
 
     private final MdcUtility mdcUtility;
-
-    @Autowired
-    public CorrelationMdcFilter(final MdcUtility mdcUtility) {
-        this.mdcUtility = mdcUtility;
-    }
 
     @Override
     public void init(final FilterConfig filterConfig) {
