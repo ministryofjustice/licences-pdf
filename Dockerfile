@@ -1,7 +1,22 @@
-FROM openjdk:8-jre-alpine
+FROM openjdk:11-slim
+MAINTAINER HMPPS Digital Studio <info@digital.justice.gov.uk>
 
-COPY ./build/artifacts/licencespdf.jar /root/licencespdf.jar
+RUN apt-get update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
 
-EXPOSE 8080
+ENV TZ=Europe/London
+RUN ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
 
-ENTRYPOINT ["/usr/bin/java", "-jar", "/root/licencespdf.jar"]
+RUN addgroup --gid 2000 --system appgroup && \
+    adduser --uid 2000 --system appuser --gid 2000
+
+WORKDIR /app
+
+COPY ./build/libs/licencespdf-*.jar /app/licencespdf.jar
+
+RUN chown -R appuser:appgroup /app
+
+USER 2000
+
+ENTRYPOINT ["/usr/bin/java", "-jar", "/app/licencespdf.jar"]

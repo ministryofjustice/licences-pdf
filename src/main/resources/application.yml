@@ -1,0 +1,39 @@
+server:
+  servlet:
+    context-path: /
+  use-forward-headers: true
+  tomcat:
+    remote-ip-header: x-forwarded-for
+    protocol_header: x-forwarded-proto
+
+spring:
+  application:
+    name: licencespdf
+  main:
+    allow-bean-definition-overriding: true
+
+logging.level.uk.gov: INFO
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: 'info, health, ping'
+  endpoint:
+    health:
+      cache:
+        time-to-live: 2000ms
+      show-details: always
+    info:
+      cache:
+        time-to-live: 2000ms
+
+graceful:
+  shutdown:
+    enabled: true
+
+logging:
+  uris:
+    exclude:
+      regex: '/health|/info|/ping'

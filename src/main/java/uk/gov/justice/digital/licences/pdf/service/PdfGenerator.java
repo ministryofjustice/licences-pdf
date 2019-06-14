@@ -1,51 +1,57 @@
 package uk.gov.justice.digital.licences.pdf.service;
 
-import com.lowagie.text.DocumentException;
+import com.itextpdf.text.DocumentException;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.xhtmlrenderer.simple.PDFRenderer;
+import uk.gov.justice.digital.licences.pdf.data.PdfRequest;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import javax.inject.Inject;
-
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
-import org.xhtmlrenderer.simple.PDFRenderer;
-import uk.gov.justice.digital.licences.pdf.data.PdfRequest;
-import uk.gov.justice.digital.licences.pdf.interfaces.TemplateRepository;
 
 @Slf4j
+@RestController
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class PdfGenerator {
 
-    private final TemplateRepository templates;
+    private final TemplateEngine engine;
 
-    @Inject
-    public PdfGenerator(TemplateRepository templates) {
-        this.templates = templates;
-    }
-
-    public Byte[] process(PdfRequest pdfRequest) {
-
-        // log.info("PDF Generator request: " + pdfRequest);
-
+    @PostMapping(value = "/generate", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<int[]> process(@RequestBody final PdfRequest pdfRequest) {
         try {
-            File inputFile = createTempFileName("input", ".html");
-            File outputFile = createTempFileName("output", ".pdf");
+            final var inputFile = createTempFileName("input", ".html");
+            final var outputFile = createTempFileName("output", ".pdf");
 
-            String document = TemplateEngine.populate(pdfRequest, templates);
+            final var document = engine.populate(pdfRequest);
 
             Files.write(inputFile.toPath(), document.getBytes());
             PDFRenderer.renderToPDF(inputFile, outputFile.getCanonicalPath());
 
-            return ArrayUtils.toObject(Files.readAllBytes(outputFile.toPath()));
+            final var body = Files.readAllBytes(outputFile.toPath());
 
-        } catch (Exception ex) {
+            final var ints = new int[body.length];
+            for(var i = 0; i < ints.length; i++){
+                ints[i] = body[i];
+            }
+
+            return ResponseEntity.ok().body(ints);
+
+        } catch (final IOException | DocumentException ex) {
             log.error("Process error", ex);
-            return null;
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    private File createTempFileName(String prefix, String suffix) throws IOException {
-        File tempTile = File.createTempFile(prefix, suffix);
+    private File createTempFileName(final String prefix, final String suffix) throws IOException {
+        final var tempTile = File.createTempFile(prefix, suffix);
+        //noinspection ResultOfMethodCallIgnored
         tempTile.delete();
 
         return tempTile;
