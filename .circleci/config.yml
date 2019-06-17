@@ -78,7 +78,7 @@ jobs:
 
   deploy_release_to_eb:
     docker:
-      - image: circleci/python:3
+      - image: mojdigitalstudio/circleci-node-awsebcli
     working_directory: ~/app
     steps:
       - checkout
