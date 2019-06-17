@@ -1,12 +1,10 @@
-defaults: &defaults
-  working_directory: ~/app
-
 version: 2
+
 jobs:
   build:
-    <<: *defaults
     docker:
       - image: circleci/openjdk:11-jdk-browsers
+    working_directory: ~/app
     steps:
       - checkout
       - restore_cache:
@@ -48,9 +46,9 @@ jobs:
             - app_version.txt
 
   build_docker:
-    <<: *defaults
     docker:
-      - image: circleci/node:10.15.0-browsers
+      - image: circleci/python:3
+    working_directory: ~/app
     steps:
       - checkout
       - setup_remote_docker:
@@ -64,7 +62,7 @@ jobs:
 
             # Build the image
             docker build --rm=false . \
-               --tag "mojdigitalstudio/pdf-generator:$BUILD_VERSION" \
+               --tag "mojdigitalstudio/pdf-generator:$APP_VERSION" \
                --label "maintainer=licences-team@digital.justice.gov.uk" \
                --label "app.version=$APP_VERSION" \
                --label "build.version=$APP_VERSION" \
@@ -72,45 +70,43 @@ jobs:
                --label "build.url=$CIRCLE_BUILD_URL" \
                --label "build.gitref=$CIRCLE_SHA1"
 
-            # Publish to docker hub for master branch builds
-            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
-              docker login -u $DOCKER_USER -p $DOCKER_PASS
-              docker push mojdigitalstudio/pdf-generator:$APP_VERSION
-              docker tag mojdigitalstudio/pdf-generator:$APP_VERSION mojdigitalstudio/pdf-generator:latest
-              docker push mojdigitalstudio/pdf-generator:latest
-            fi
+            # Publish to docker hub
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push mojdigitalstudio/pdf-generator:$APP_VERSION
+            docker tag mojdigitalstudio/pdf-generator:$APP_VERSION mojdigitalstudio/pdf-generator:latest
+            docker push mojdigitalstudio/pdf-generator:latest
 
-    deploy_release_to_eb:
-      <<: *defaults
-      docker:
-        - image: mojdigitalstudio/circleci-node-awsebcli
-      steps:
-        - checkout
-        - attach_workspace:
-            at: ~/app
-        - deploy:
-            name: Deploy to Elastic Beanstalk Dev
-            command: |
-              VERSION=$(cat ./app_version.txt)
-              cat <<EOF > ./Dockerrun.aws.json
-              {
-                 "AWSEBDockerrunVersion": "1",
-                 "Image": {
-                   "Name": "mojdigitalstudio/pdf-generator:$VERSION",
-                   "Update": "true"
-                 },
-                 "Ports": [
-                   {"ContainerPort": "8080"}
-                 ]
-               }
-              EOF
-              ~/.local/bin/eb deploy --process --verbose --label ${VERSION}
-        - persist_to_workspace:
-            root: .
-            paths:
-              - Dockerrun.aws.json
-        - store_artifacts:
-            path: Dockerrun.aws.json
+  deploy_release_to_eb:
+    docker:
+      - image: circleci/python:3
+    working_directory: ~/app
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/app
+      - deploy:
+          name: Deploy to Elastic Beanstalk Dev
+          command: |
+            VERSION=$(cat ./app_version.txt)
+            cat <<EOF > ./Dockerrun.aws.json
+            {
+               "AWSEBDockerrunVersion": "1",
+               "Image": {
+                 "Name": "mojdigitalstudio/pdf-generator:$VERSION",
+                 "Update": "true"
+               },
+               "Ports": [
+                 {"ContainerPort": "8080"}
+               ]
+            }
+            EOF
+            ~/.local/bin/eb deploy --process --verbose --label ${VERSION}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - Dockerrun.aws.json
+      - store_artifacts:
+          path: Dockerrun.aws.json
 
 workflows:
   version: 2
