@@ -19,4 +19,4 @@ RUN chown -R appuser:appgroup /app
 
 USER 2000
 
-ENTRYPOINT ["/usr/bin/java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
