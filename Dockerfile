@@ -13,9 +13,7 @@ RUN addgroup --gid 2000 --system appgroup && \
 
 WORKDIR /app
 
-COPY ./build/libs/licencespdf-*.jar /app/app.jar
-
-RUN chown -R appuser:appgroup /app
+COPY --chown=appuser:appgroup ./build/libs/licencespdf-*.jar /app/app.jar
 
 USER 2000
 

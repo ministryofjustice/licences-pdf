@@ -37,3 +37,8 @@ logging:
   uris:
     exclude:
       regex: '/health|/info|/ping'
+
+azure:
+  application-insights:
+    web:
+      enable-W3C: true

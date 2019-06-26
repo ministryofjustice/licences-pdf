@@ -15,16 +15,12 @@ jobs:
       - run:
           name: Record the Application Version
           command: |
-            jar xvf build/libs/licencespdf-*.jar BOOT-INF/classes/META-INF/build-info.properties
-            APP_VERSION=$(grep 'build.version=' BOOT-INF/classes/META-INF/build-info.properties | awk -F= '{print $2}')
-            rm BOOT-INF/classes/META-INF/build-info.properties
+            APP_VERSION=$(unzip -p build/libs/licencespdf-*.jar BOOT-INF/classes/META-INF/build-info.properties | awk -F = '/build.version/ {print $2}')
 
             # make up a good version name
-            TAG=${APP_VERSION}.${CIRCLE_BRANCH}
-            if [[ "${CIRCLE_BRANCH}" == "master" ]]; then
-              TAG=${APP_VERSION}
-            fi
-            echo $TAG > ./app_version.txt
+            [[ "${CIRCLE_BRANCH}" == "master" ]] && echo "$APP_VERSION" || echo "${APP_VERSION}.${CIRCLE_BRANCH}" > ./app_version.txt
+
+            awk '{print "Setting app version to " $1}' ./app_version.txt
       - save_cache:
           key: gradle-wrapper-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
           paths:

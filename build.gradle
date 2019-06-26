@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 import java.time.Instant
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -5,8 +7,8 @@ import java.time.format.DateTimeFormatter
 plugins {
     id 'java'
     id 'groovy'
-    id 'org.springframework.boot' version '2.1.5.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.7.RELEASE'
+    id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'com.github.ben-manes.versions' version '0.21.0'
 }
 
@@ -44,7 +46,7 @@ springBoot {
 
 dependencyManagement {
     imports {
-        mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+        mavenBom(SpringBootPlugin.BOM_COORDINATES)
     }
 }
 
