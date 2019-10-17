@@ -1,3 +1,5 @@
+THIS PROJECT NO LONGER USED - ARCHIVED
+
 # Licences PDF Generator
 
 Copied from https://github.com/noms-digital-studio/pdf-generator
